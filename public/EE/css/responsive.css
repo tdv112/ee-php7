@@ -1,0 +1,28 @@
+@media (min-width :992px) and (max-width: 1320px) {
+}
+
+
+@media (min-width :768px) and (max-width: 991px) {
+
+}
+@media (max-width: 991px) {
+    .hidden-xs{
+        display: none;
+    }
+    .list-btnaction{
+        top: 10px;
+    }
+    #img_logo{
+        margin-left: 0px!important;
+        width: 71px!important;
+    }
+
+}
+@media (max-width: 768px) {
+    .address{
+        margin-top: 0px!important;
+    }
+    .contact{
+        margin-top: -15px!important;
+    }
+}
