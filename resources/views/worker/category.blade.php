@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+@extends('layouts.master')
 @section('content')
 <div class="content workers text-center" id="content">
 	<div class="row">

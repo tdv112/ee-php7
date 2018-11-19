@@ -19,7 +19,8 @@ class HireController extends Controller
     public function create()
     {
         $session = new Session();
-        return view('hire.create-posts',compact($session));
+
+        return view('hire.create-posts',compact('session'));
     }
     public function show(Request $req)
     {

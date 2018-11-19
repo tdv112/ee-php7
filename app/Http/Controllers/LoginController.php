@@ -108,6 +108,7 @@ class LoginController extends Controller
         }
     }
 
+
     public function redirectToFacebook()
     {
         return Socialite::driver('facebook')->redirect();

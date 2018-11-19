@@ -1,8 +1,8 @@
-@extends('frontend.layouts.master')
+@extends('layouts.master')
 @section('content')
 <?php use Symfony\Component\HttpFoundation\Session\Session; $session = new Session();?>
 <?php $auth = $session->get('auth');?>
-<link rel="stylesheet" type="text/css" href="{{ asset('themeEE/frontend/css/dropzone.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('EE/css/dropzone.css') }}">
 <style type="text/css">
     #img-fb{
         position: absolute!important;
@@ -18,7 +18,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -26,7 +26,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -34,7 +34,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -42,7 +42,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -58,7 +58,7 @@
                     <a href="">
                         <div class="card">
                             <img class="card-img-top img-rounded img-responsive"
-                                 src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                 src="/EE/images/ads.jpg" alt="Card image cap">
                         </div>
                     </a>
                 </li>
@@ -121,13 +121,13 @@
                 <div class="col-sm-11 form-group contact" style="padding-left: 0px;padding-right:0px">
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <img class="img-social" id="img-fb" src="/themeEE/frontend/images/icon-facebook.png" style="width: 34px">
+                            <img class="img-social" id="img-fb" src="/EE/images/icon-facebook.png" style="width: 34px">
                             <input type="text" class="form-control ipt-social" id="facebook" name="facebook"
                                    value=""
                                    placeholder="Ex. facebook.com/buihuykhuong">
                         </div>
                         <div class="col-xs-6">
-                            <img class="img-social" id="img-gmail" src="/themeEE/frontend/images/gmail.png" style="width: 34px">
+                            <img class="img-social" id="img-gmail" src="/EE/images/gmail.png" style="width: 34px">
                             <input type="text" class="form-control ipt-social" id="gmail" name="gmail" value=""
                                    placeholder="Ex. huykhuong@gmail.com">
                         </div>
@@ -232,7 +232,7 @@
 </div>
 
         
-<script type="text/javascript" src="{{asset('themeEE/frontend/js/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('EE/js/jquery.min.js')}}"></script>
 
 <script type="text/javascript">
     function initialize(){
@@ -310,7 +310,7 @@
         }
 </script> 
     {{-- <script type="text/javascript" src="{{asset('themeEE/frontend/js/location.js')}}"></script> --}}
-    <script type="text/javascript" src="{{asset('themeEE/frontend/js/dropzone.js')}}"></script>
+    <script type="text/javascript" src="{{asset('EE/js/dropzone.js')}}"></script>
     <script type="text/javascript">
         var img = ' <?php echo json_encode($session->get('upl')); ?>';
         $("#dropzone").dropzone({

@@ -6,6 +6,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Response;
 
 class Controller extends BaseController
 {
@@ -76,12 +79,12 @@ class Controller extends BaseController
 
 	public function getmypost($id){
 		$posts = DB::table('posts')->where('customer_code',$id)->orderBy('created_at','desc')->get();
-		return view('frontend.mypost',compact('posts'));
+		return view('mypost',compact('posts'));
 	}
 
 	public function editmypost($id){
 		$post = DB::table('posts')->where('id',$id)->first();
-		return view('frontend.detailmypost',compact('post'));
+		return view('detailmypost',compact('post'));
 	}
 
 	public function storemypost(Request $req,$id){

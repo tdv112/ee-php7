@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+@extends('layouts.master')
 @section('content')
 
     {{-- Start section / Import css --}}
@@ -17,7 +17,23 @@
                             <a href="">
                                 <div class="card">
                                     <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="card">
+                                    <img class="card-img-top img-rounded img-responsive"
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <div class="card">
+                                    <img class="card-img-top img-rounded img-responsive"
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
                                 </div>
                             </a>
                         </li>
@@ -33,23 +49,7 @@
                             <a href="">
                                 <div class="card">
                                     <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <div class="card">
-                                    <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <div class="card">
-                                    <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
                                 </div>
                             </a>
                         </li>
@@ -85,7 +85,7 @@
                         @foreach ($posts as $element)
                             <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img src="/themeEE/frontend/images/ads.jpg" alt="...">
+                                <img src="/EE/images/ads.jpg" alt="...">
                                 <div class="caption">
                                     <h5 style="word-wrap: break-word;">{{$element->post_title}}</h5>
                                     <p>Người đăng : {{$element->name}}</p>
@@ -178,7 +178,7 @@
     {{-- End section --}}
 @endsection
 {{-- Page Javascript --}}
-<script type="text/javascript" src="{{asset('themeEE/frontend/js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('EE/js/jquery.min.js')}}"></script>
 <script type="text/javascript">
     function mapview(){
         $('#list-view').hide();

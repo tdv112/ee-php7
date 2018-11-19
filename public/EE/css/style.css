@@ -428,7 +428,7 @@ input{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-inline-size: 201px;
+    max-inline-size: 400px;
 }
 .row-list{
     margin-top: -15px!important;

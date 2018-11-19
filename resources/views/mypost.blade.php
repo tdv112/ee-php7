@@ -116,7 +116,7 @@
 @endsection
 {{-- Page Javascript --}}
 
-<script type="text/javascript" src="{{asset('themeEE/frontend/js/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('EE/js/jquery.min.js')}}"></script>
 
 {{-- <script src="{{ asset('themeEE/frontend/js/mapAPI.js') }}"></script> --}}
 

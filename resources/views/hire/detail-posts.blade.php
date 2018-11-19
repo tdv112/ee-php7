@@ -14,7 +14,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                src="EE/images/ads.jpg" alt="Card image cap">
+                                src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -22,7 +22,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                     src="EE/images/ads.jpg" alt="Card image cap">
+                                     src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -30,7 +30,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                     src="EE/images/ads.jpg" alt="Card image cap">
+                                     src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -38,7 +38,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                     src="EE/images/ads.jpg" alt="Card image cap">
+                                     src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -46,7 +46,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                     src="EE/images/ads.jpg" alt="Card image cap">
+                                     src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -54,7 +54,7 @@
                         <a href="">
                             <div class="card">
                                 <img class="card-img-top img-rounded img-responsive"
-                                     src="EE/images/ads.jpg" alt="Card image cap">
+                                     src="/EE/images/ads.jpg" alt="Card image cap">
                             </div>
                         </a>
                     </li>
@@ -113,13 +113,13 @@
                     <div class="col-sm-11 form-group" style="padding-left: 0px;padding-right:0px">
                         <div class="form-group">
                             <div class="col-xs-6">
-                                <img class="img-social" id="img-fb" src="EE/images/icon-facebook.png" style="width: 34px">
+                                <img class="img-social" id="img-fb" src="/EE/images/icon-facebook.png" style="width: 34px">
                                 <input type="text" class="form-control ipt-social" id="facebook" name="facebook"
                                        value="{{$post->facebook}}"
                                        placeholder="Ex. facebook.com/buihuykhuong" readonly="readonly">
                             </div>
                             <div class="col-xs-6">
-                                <img class="img-social" id="img-gmail" src="EE/images/gmail.png" style="width: 34px">
+                                <img class="img-social" id="img-gmail" src="/EE/images/gmail.png" style="width: 34px">
                                 <input type="text" class="form-control ipt-social" id="gmail" name="gmail" value="{{$post->gmail}}"
                                        placeholder="Ex. huykhuong@gmail.com" readonly="readonly">
                             </div>
@@ -212,9 +212,9 @@
         {{-- End right banner ads--}}
     </div>
     {{-- @import script --}}
-<script type="text/javascript" src="{{asset('themeEE/frontend/js/jquery.min.js')}}"></script> 
+<script type="text/javascript" src="{{asset('EE/js/jquery.min.js')}}"></script>
 
-<script type="text/javascript" src="{{asset('themeEE/frontend/js/dropzone.js')}}"></script>
+<script type="text/javascript" src="{{asset('EE/js/dropzone.js')}}"></script>
 {{-- @endimport script --}}
 <script type="text/javascript">
         function initialize(){
