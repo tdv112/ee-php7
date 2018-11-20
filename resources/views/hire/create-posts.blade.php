@@ -175,10 +175,13 @@
                         <label class="lbl">Đính kèm</label>
                     </div>
                     <div class="col-sm-11 img-upload ">
-                        <div class="dropzone" id="dropzone">
-                            <small>Nhấp vào để tải ảnh lên</small>
-                            <br>
-                            <small>(Hoặc kéo ảnh vào đây)</small>
+                        <div id="dropzone">
+                            <form action="" class="dropzone needsclick dz-clickable" id="demo-upload">
+                                <meta name="csrf-token" content="{{ csrf_token() }}">
+                                <div class="dz-message needsclick">
+                                    <small>Nhấp vào để tải ảnh lên</small><br> <small>(Hoặc kéo ảnh vào đây)</small>
+                                </div>
+                            </form>
                         </div>
                     </div>
             </div>
@@ -309,8 +312,8 @@
     </script>
     <script type="text/javascript">
         var img = ' <?php echo json_encode($session->get('upl')); ?>';
-        $("#upload").dropzone({
-            url : "upload",
+        $("#dropzone").dropzone({
+            url : '/upload',
             addRemoveLinks: true,
         });
         function  create_post()  {

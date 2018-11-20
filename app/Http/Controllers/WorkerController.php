@@ -21,7 +21,7 @@ class WorkerController extends Controller
         if($keyword != null){
             $posts = $posts->where('post_title','like','%'.$keyword.'%')->orwhere('post_content','like','%'.$keyword.'%');
         }
-        $posts = $posts->orderBy('created_at','desc')->simplePaginate(10);
+        $posts = $posts->orderBy('created_at','desc')->paginate(10);
 		return view('worker.list-posts',compact('posts','keyword','address'));
 	}
 	public function category(){
@@ -47,8 +47,6 @@ class WorkerController extends Controller
         $posts->phone           = $req->data['phone'];
         $posts->facebook        = $req->data['facebook'];
         $posts->gmail           = $req->data['gmail'];
-        $posts->zalo            = $req->data['zalo'];
-        $posts->twitter         = $req->data['twitter'];
         $posts->location        = json_encode($req->data['location']);
         $posts->address         = $req->data['address'];
         $posts->post_title     = $req->data['title'];

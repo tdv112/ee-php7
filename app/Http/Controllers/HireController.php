@@ -35,7 +35,7 @@ class HireController extends Controller
         if($keyword != null){
             $posts = $posts->where('post_title','like','%'.$keyword.'%')->orwhere('post_content','like','%'.$keyword.'%');
         }
-        $posts = $posts->orderBy('created_at','desc')->simplePaginate(10);
+        $posts = $posts->orderBy('created_at','desc')->paginate(10);
         return view('hire.list-posts',compact('posts','keyword','address'));
     }
 
