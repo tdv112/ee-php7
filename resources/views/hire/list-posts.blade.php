@@ -219,7 +219,7 @@
             $.ajax({
                 url: '{{route("location")}}',
                 type: 'GET',
-                data: {address : '{{$address}}', '_token': '{{ csrf_token() }}'},
+                data: {address : '', '_token': '{{ csrf_token() }}'},
                 dataType: 'JSON',
                 async: false,
                 success: function (result) {
@@ -249,15 +249,16 @@
                 if (place.geometry.viewport) {
                    var map = new google.maps.Map(document.getElementById('map-canvas'), {
                         center: {lat: place.geometry.viewport.l.j, lng: place.geometry.viewport.j.j},
-                        zoom: 8
+                        zoom: 10
                     });
                     $.ajax({
                         url: '{{route("location")}}',
                         type: 'GET',
-                        data: {address : place.formatted_address, '_token': '{{ csrf_token() }}'},
+                        data: {address : '', '_token': '{{ csrf_token() }}'},
                         dataType: 'JSON',
                         async: false,
                         success: function (result) {
+                            console.log(result);
                             if(result.status == 200){
                                 for (var i = 0; i<= result.post.length-1 ; i++){
                                    var location = JSON.parse(result.post[i].location);
