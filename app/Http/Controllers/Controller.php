@@ -102,9 +102,16 @@ class Controller extends BaseController
 		]);
        
         if($post)
-            return Response::json(['status' => 400]);
-        else
             return Response::json(['status' => 200]);
+        else
+            return Response::json(['status' => 400]);
 	}
-	
+
+	public function location(Request $req){
+        $post = DB::table('posts')->where('address','LIKE','%'.$req->address.'%')->get();
+        if($post)
+            return Response::json(['status' => 200,'post' => $post]);
+        else
+            return Response::json(['status' => 400]);
+    }
 }

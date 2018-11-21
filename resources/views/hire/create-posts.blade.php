@@ -259,6 +259,7 @@
                         geocoder.geocode({'latLng': latlng}, function(results, status) {
                             if (status === google.maps.GeocoderStatus.OK) {
                                 if (results[1]) {
+                                    console.log(results[0]);
                                     sessionStorage.setItem("address", results[0].formatted_address);
                                     console.log( results[0].formatted_address);
                                     var map = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -289,6 +290,7 @@
                     window.alert("No details available for input: '" + place.name + "'");
                 return;
                 }
+                console.log(place);
                 sessionStorage.setItem("address", place.formatted_address);
                 if (place.geometry.viewport) {
                    var map = new google.maps.Map(document.getElementById('map-canvas'), {

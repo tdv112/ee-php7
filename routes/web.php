@@ -37,7 +37,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('create-posts', 'HireController@store')->name('hire_storeposts');
            
         });
-        Route::get('danh-sach-tin', 'HireController@show')->name('hire_listposts');
+        Route::get('kho-thong-tin', 'HireController@show')->name('hire_listposts');
         Route::get('tin/{slug}', 'HireController@detail')->name('hire_detailposts');
     });
 //group routing worker
@@ -47,7 +47,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('dang-tin', 'WorkerController@create')->name('worker_createposts');
             Route::post('create-posts', 'WorkerController@store')->name('worker_storeposts');
         });
-        Route::get('danh-sach-tin', 'WorkerController@show')->name('worker_listposts');
+        Route::get('kho-thong-tin', 'WorkerController@show')->name('worker_listposts');
         Route::get('tin/{slug}', 'WorkerController@detail')->name('worker_detailposts');
     });
     /*Upload image */
@@ -57,5 +57,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('get_location_post', 'Controller@getlocationpost')->name('get_location_post');
     Route::get('/mypost/{userid}', 'Controller@getmypost')->name('frontend_mypost');
     Route::get('/edit-post/{id}', 'Controller@editmypost')->name('frontend_editmypost');
+    Route::get('/location', 'Controller@location')->name('location');
     Route::post('store-post/{id}', 'Controller@storemypost')->name('storemypost');
 });

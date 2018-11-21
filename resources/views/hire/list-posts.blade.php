@@ -106,6 +106,8 @@
                                     <label class="lbl">Vị trí</label>&nbsp
                                 </div>
                                 <div class="col-md-11">
+                                    <input type="hidden" id="lat" name="lat">
+                                    <input type="hidden" id="lng" name="lng">
                                     <input id="autocomplete" class="form-control" name="address" placeholder="Ex. 54 Nguyễn Thị Minh Khai, Q.1, TP HCM" type="text" value="{{$address}}">
                                     <div class="map-canvas" id="map-canvas" style="width: 100%; height: 300px;"></div>
                                 </div>
@@ -137,8 +139,8 @@
                                                 <td>
                                                     <a style="font-weight: bold; " href="../thue-lao-dong/tin/{{$element->id}}">{{$element->post_title}}</a><br>
                                                     <p class="sh-content">{{$element->post_content}}</p>
-                                                    <small class="pull-right time-post">{{date("d-m-Y", strtotime($element->created_at))}}</small>
                                                 </td>
+                                                <td style="width: 60px"><small class="pull-right time-post">{{date("d-m-Y", strtotime($element->created_at))}}</small></td>
                                             </tr>
                                             @endforeach
                                             @if (count($posts) == 0)
@@ -211,66 +213,66 @@
 <script type="text/javascript">
     function initialize(){
             var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                center: {lat: 10.762622, lng: 106.660172},
-                zoom: 13
+                center: {lat: {{$lat}}, lng: {{$lng}} },
+                zoom: 8
             });
-            if (navigator.geolocation) {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        var geolocation = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        sessionStorage.setItem("lat", position.coords.latitude);
-                        sessionStorage.setItem("lng", position.coords.longitude);
-                        var circle = new google.maps.Circle({
-                            center: geolocation,
-                            radius: position.coords.accuracy
-                        });
-                        var geocoder = new google.maps.Geocoder;
-                        var latlng = new google.maps.LatLng(geolocation.lat, geolocation.lng);
-                        geocoder.geocode({'latLng': latlng}, function(results, status) {
-                            if (status === google.maps.GeocoderStatus.OK) {
-                                if (results[1]) {
-                                    sessionStorage.setItem("address", results[0].formatted_address);
-                                    console.log( results[0].formatted_address);
-                                    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                                        center: {lat: position.coords.latitude, lng: position.coords.longitude},
-                                        zoom: 17
-                                    });
-                                    var marker = new google.maps.Marker({
-                                        map: map,
-                                        position: results[0].geometry.location
-                                    });
-                                } else {
-                                    alert('No results found');
-                                }
-                            } else {
-                                alert('Geocoder failed due to: ' + status);
-                            }
-                        });
-                    });
-                } 
-            }
+            $.ajax({
+                url: '{{route("location")}}',
+                type: 'GET',
+                data: {address : '{{$address}}', '_token': '{{ csrf_token() }}'},
+                dataType: 'JSON',
+                async: false,
+                success: function (result) {
+                    if(result.status == 200){
+                        for (var i = 0; i<= result.post.length-1 ; i++){
+                            var location = JSON.parse(result.post[i].location);
+                            console.log(result.post[i]);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)},
+                                title: result.post[i].post_title +' | '+ result.post[i].name
+                            });
+                            marker.addListener('click', function() {
+                                map.setZoom(8);
+                                map.setCenter(marker.getPosition());
+                            });
+                        }
+                    }
+                }
+            });
             var input = document.getElementById('autocomplete');
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo('bounds', map);
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
-                if (!place.geometry) {
-                    window.alert("No details available for input: '" + place.name + "'");
-                return;
-                }
                 console.log(place);
                 if (place.geometry.viewport) {
                    var map = new google.maps.Map(document.getElementById('map-canvas'), {
                         center: {lat: place.geometry.viewport.l.j, lng: place.geometry.viewport.j.j},
-                        zoom: 17
+                        zoom: 8
                     });
-                   var marker = new google.maps.Marker({
-                        map: map,
-                        position: {lat: place.geometry.viewport.l.j, lng: place.geometry.viewport.j.j}
+                    $.ajax({
+                        url: '{{route("location")}}',
+                        type: 'GET',
+                        data: {address : place.formatted_address, '_token': '{{ csrf_token() }}'},
+                        dataType: 'JSON',
+                        async: false,
+                        success: function (result) {
+                            if(result.status == 200){
+                                for (var i = 0; i<= result.post.length-1 ; i++){
+                                   var location = JSON.parse(result.post[i].location);
+                                   console.log(parseFloat(location.lat));
+                                    console.log(parseFloat(location.lng));
+                                    var marker = new google.maps.Marker({
+                                        map: map,
+                                        position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)}
+                                    });
+                                }
+                            }
+                        }
                     });
+                   $('#lat').val(place.geometry.viewport.l.j);
+                   $('#lng').val(place.geometry.viewport.j.j);
                 } else {
                     map.setCenter(place.geometry.location);
                     map.setZoom(17);  // Why 17? Because it looks good.
@@ -279,7 +281,6 @@
                 // marker.setPosition(place.geometry.location);
             });
         }
-
 </script>
 <script type="text/javascript">
     function googleTranslateElementInit() {

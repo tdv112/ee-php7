@@ -13,6 +13,8 @@ class WorkerController extends Controller
 	public function show(Request $req){
 		$keyword    = !empty($req->search) ? $req->search : null;
         $address    = !empty($req->address) ? $req->address : null;
+        $lat        = !empty($req->lat) ? $req->lat : '10.762622';
+        $lng        = !empty($req->lng) ? $req->lng : '106.660172';
         $posts      = DB::table('posts')->where('status',1)->where('post_type',1);
          
         if($address != null){
@@ -22,7 +24,7 @@ class WorkerController extends Controller
             $posts = $posts->where('post_title','like','%'.$keyword.'%')->orwhere('post_content','like','%'.$keyword.'%');
         }
         $posts = $posts->orderBy('created_at','desc')->paginate(10);
-		return view('worker.list-posts',compact('posts','keyword','address'));
+		return view('worker.list-posts',compact('posts','keyword','address','lat','lng'));
 	}
 	public function category(){
     	return view('worker.category');

@@ -7,6 +7,13 @@
     }
 </style>
 <div class="newpost" id="newpost">
+    <div class="form-group " style="padding-left: 242px;">
+        <div class="row">
+            <div class="col-sm-11 col-sm-offset-1">
+                <div id="google_translate_element"></div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
 
@@ -53,7 +60,7 @@
                             <div class="col-md-6 col-xs-6 dgm" style="padding-right: 0px;">
                                 <a href="{{route('gg_login')}}" class="connect googleplus btn-gg">
                                     <div class="connect__icon">
-                                        <img id="img-login-gmail" src="{{asset('themeEE/frontend/images/gmail.png')}}" width="75%" style="object-fit: cover;">
+                                        <img id="img-login-gmail" src="{{asset('EE/images/gmail.png')}}" width="75%" style="object-fit: cover;">
                                     </div>
                                     <div class="connect__context">
                                         <span id="ggtext">Đăng kí bằng tài khoản Gmail</span>
@@ -139,4 +146,10 @@
         }
     });
 </script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'vi'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 @endsection

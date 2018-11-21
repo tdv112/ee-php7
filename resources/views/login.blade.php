@@ -6,6 +6,13 @@
     }
 </style>
     <div class="newpost" id="newpost">
+        <div class="form-group " style="padding-left: 242px;">
+            <div class="row">
+                <div class="col-sm-11 col-sm-offset-1">
+                    <div id="google_translate_element"></div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <?php use Symfony\Component\HttpFoundation\Session\Session; $session = new Session(); ?>
             @if($session->has('alert-login'))
@@ -126,5 +133,10 @@
             }
         });
     </script>
-
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'vi'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 @endsection
