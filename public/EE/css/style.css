@@ -445,3 +445,26 @@ input{
     padding-left: 17px;
     padding-top: 8px;
 }
+#modal-map{
+    width: 22%;
+    height: 300px;
+    /*display: none; */
+    background-color: white;
+    position: absolute;
+    margin-top: -297px;
+    border-radius: 18px;
+}
+.close-modal-map{
+    margin-right: 15px;
+    color: deeppink;
+}
+.title-modal{
+    padding: 7px;
+}
+.name-modal{
+    padding: 7px;
+}
+.date-modal{
+    padding: 7px;
+}
+

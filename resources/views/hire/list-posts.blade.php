@@ -41,7 +41,7 @@
                             <a href="">
                                 <div class="card">
                                     <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
                                 </div>
                             </a>
                         </li>
@@ -57,7 +57,7 @@
                             <a href="">
                                 <div class="card">
                                     <img class="card-img-top img-rounded img-responsive"
-                                         src="/themeEE/frontend/images/ads.jpg" alt="Card image cap">
+                                         src="/EE/images/ads.jpg" alt="Card image cap">
                                 </div>
                             </a>
                         </li>
@@ -96,7 +96,6 @@
                             </div>
                         </div>
                         @endforeach
-                        
                     </div>
                     {{-- End icon view / Begin list view --}}
                     <div class="row" id="list-view">
@@ -110,6 +109,15 @@
                                     <input type="hidden" id="lng" name="lng">
                                     <input id="autocomplete" class="form-control" name="address" placeholder="Ex. 54 Nguyễn Thị Minh Khai, Q.1, TP HCM" type="text" value="{{$address}}">
                                     <div class="map-canvas" id="map-canvas" style="width: 100%; height: 300px;"></div>
+                                    {{-- modal map info --}}
+                                    <div id="modal-map">
+                                        <a href="javascript:void(0)" onclick="hidemodalmap()" class="close-modal-map pull-right">x</a>
+                                        <div class="image-modal"><img width="100%" height="120px" src="/EE/images/ads.jpg"></div>
+                                        <div class="title-modal text-center">Tuyển người</div>
+                                        <div class="name-modal text-center">Dang thao</div>
+                                        <div class="date-modal text-center">20-11-2018</div>
+                                        <div class="button-modal text-center"><a class="btn btn-success">Chi tiết</a></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="cleafix"></div>
@@ -140,7 +148,7 @@
                                                     <a style="font-weight: bold; " href="../thue-lao-dong/tin/{{$element->id}}">{{$element->post_title}}</a><br>
                                                     <p class="sh-content">{{$element->post_content}}</p>
                                                 </td>
-                                                <td style="width: 60px"><small class="pull-right time-post">{{date("d-m-Y", strtotime($element->created_at))}}</small></td>
+                                                <td style="width: 100px"><small class="pull-right time-post">{{date("d-m-Y", strtotime($element->created_at))}}</small></td>
                                             </tr>
                                             @endforeach
                                             @if (count($posts) == 0)
@@ -177,6 +185,8 @@
             </div>
         </div>
     </div>
+
+    
     {{-- End section --}}
 @endsection
 {{-- Page Javascript --}}
@@ -211,77 +221,141 @@
     }
 </script>
 <script type="text/javascript">
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('-');
+    }
     function initialize(){
-            var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                center: {lat: {{$lat}}, lng: {{$lng}} },
-                zoom: 8
-            });
-            $.ajax({
-                url: '{{route("location")}}',
-                type: 'GET',
-                data: {address : '', '_token': '{{ csrf_token() }}'},
-                dataType: 'JSON',
-                async: false,
-                success: function (result) {
-                    if(result.status == 200){
-                        for (var i = 0; i<= result.post.length-1 ; i++){
-                            var location = JSON.parse(result.post[i].location);
-                            console.log(result.post[i]);
-                            var marker = new google.maps.Marker({
-                                map: map,
-                                position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)},
-                                title: result.post[i].post_title +' | '+ result.post[i].name
-                            });
-                            marker.addListener('click', function() {
-                                map.setZoom(8);
-                                map.setCenter(marker.getPosition());
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {lat: {{$lat}}, lng: {{$lng}} },
+            zoom: 15
+        });
+        $.ajax({
+            url: '{{route("location-hire")}}',
+            type: 'GET',
+            data: {address : '{{$address}}', '_token': '{{ csrf_token() }}'},
+            dataType: 'JSON',
+            async: false,
+            success: function (result) {
+                if(result.status == 200){
+                    console.log(result);
+                    var markers = [];
+                    for (var i = 0; i<= result.post.length-1 ; i++){
+                        
+                        var location = JSON.parse(result.post[i].location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)},
+                            title: result.post[i].post_title +' | '+ result.post[i].name,
+                            icon: 'https://ee-work.com/EE/images/maker-blue.png'
+                        });
+                        var infowindow = new google.maps.InfoWindow({
+                            content: 
+                                '<div class="col-sm-4"><img width="100%" height="90px" src="/EE/images/ads.jpg"></div>'
+                                        +'<div class="col-sm-8">'
+                                            +'<div class="title-modal">'+result.post[i].post_title+'</div>'
+                                            +'<div class="name-modal">Người đăng : '+result.post[i].name+'</div>'
+                                            +'<div class="date-modal">Ngày đăng :'+result.post[i].created_at+'</div>'
+                                            +'<div class="button-modal text-center"><a href="/thue-lao-dong/tin/'+result.post[i].id+'">Xem chi tiết</a></div>'
+                                        +'</div>'
+                          });
+                        setContent(marker,infowindow);
+                    }
+                }
+            }
+        });
+        var input = document.getElementById('autocomplete');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+            console.log(place);
+            if (place.geometry.viewport) {
+               var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    center: {lat: place.geometry.viewport.l.j, lng: place.geometry.viewport.j.j},
+                    zoom: 11
+                });
+                $.ajax({
+                    url: '{{route("location-hire")}}',
+                    type: 'GET',
+                    data: {address : place.formatted_address, '_token': '{{ csrf_token() }}'},
+                    dataType: 'JSON',
+                    async: false,
+                    success: function (result) {
+                        console.log(result.post);
+                        if(result.status == 200){
+                            /* 
+                            * Load map 
+                            */
+                            for (var i = 0; i<= result.post.length-1 ; i++){
+                               var location = JSON.parse(result.post[i].location);
+                               // console.log(location);
+                                var marker = new google.maps.Marker({
+                                    map: map,
+                                    position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)},
+                                    title: result.post[i].post_title +' | '+ result.post[i].name,
+                                    icon: 'https://ee-work.com/EE/images/maker-blue.png'
+                                });
+                                var infowindow = new google.maps.InfoWindow({
+                                content: 
+                                       '<div class="col-sm-4"><img width="100%" height="90px" src="/EE/images/ads.jpg"></div>'
+                                        +'<div class="col-sm-8">'
+                                            +'<div class="title-modal">'+result.post[i].post_title+'</div>'
+                                            +'<div class="name-modal">Người đăng : '+result.post[i].name+'</div>'
+                                            +'<div class="date-modal">Ngày đăng :'+result.post[i].created_at+'</div>'
+                                            +'<div class="button-modal text-center"><a href="/thue-lao-dong/tin/'+result.post[i].id+'">Xem chi tiết</a></div>'
+                                        +'</div>'
+                              });
+                            setContent(marker,infowindow);
+                            }
+                            /*
+                            * Load table
+                            */
+                            $('#list-table').html('');
+                            $('.pagination').html('');
+                            $.each(result.post, function( index, value ) {
+                              console.log(value.length);
+                              if(result.post.length == 0) 
+                                var html = '<tr><td>Không tìm thấy tin nào</td></tr>';
+                              else   
+                                var html =  '<tr class="let">'
+                                +'<td>'
+                                    +'<a style="font-weight: bold; " href="../thue-lao-dong/tin/'+value.id+'">'+value.post_title+'</a><br>'
+                                    +'<p class="sh-content">'+value.post_content+'</p>'
+                                +'</td>'
+                                +'<td style="width: 100px"><small class="pull-right time-post">'+formatDate(value.created_at)+'</small></td>'
+                                +'</tr>';
+                                $('#list-table').append(html);   
                             });
                         }
                     }
-                }
-            });
-            var input = document.getElementById('autocomplete');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.bindTo('bounds', map);
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-                console.log(place);
-                if (place.geometry.viewport) {
-                   var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                        center: {lat: place.geometry.viewport.l.j, lng: place.geometry.viewport.j.j},
-                        zoom: 10
-                    });
-                    $.ajax({
-                        url: '{{route("location")}}',
-                        type: 'GET',
-                        data: {address : '', '_token': '{{ csrf_token() }}'},
-                        dataType: 'JSON',
-                        async: false,
-                        success: function (result) {
-                            console.log(result);
-                            if(result.status == 200){
-                                for (var i = 0; i<= result.post.length-1 ; i++){
-                                   var location = JSON.parse(result.post[i].location);
-                                   console.log(parseFloat(location.lat));
-                                    console.log(parseFloat(location.lng));
-                                    var marker = new google.maps.Marker({
-                                        map: map,
-                                        position: {lat: parseFloat(location.lat), lng: parseFloat(location.lng)}
-                                    });
-                                }
-                            }
-                        }
-                    });
-                   $('#lat').val(place.geometry.viewport.l.j);
-                   $('#lng').val(place.geometry.viewport.j.j);
-                } else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);  // Why 17? Because it looks good.
+                });
+               $('#lat').val(place.geometry.viewport.l.j);
+               $('#lng').val(place.geometry.viewport.j.j);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
 
-                }
-                // marker.setPosition(place.geometry.location);
-            });
-        }
+            }
+        });
+    }
+    function setContent(marker,infowindow){
+        marker.addListener('click', function() {
+            infowindow.open(marker.get('map'), marker);
+        });
+    }
+</script>
+<script type="text/javascript">
+    function hidemodalmap(){
+        $('#modal-map').hide('slow');
+    }
 </script>
 <script type="text/javascript">
     function googleTranslateElementInit() {

@@ -57,6 +57,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('get_location_post', 'Controller@getlocationpost')->name('get_location_post');
     Route::get('/mypost/{userid}', 'Controller@getmypost')->name('frontend_mypost');
     Route::get('/edit-post/{id}', 'Controller@editmypost')->name('frontend_editmypost');
-    Route::get('/location', 'Controller@location')->name('location');
+    Route::get('/location-hire', 'HireController@locationHire')->name('location-hire');
+    Route::get('/location-worker', 'WorkerController@locationWorker')->name('location-worker');
     Route::post('store-post/{id}', 'Controller@storemypost')->name('storemypost');
 });

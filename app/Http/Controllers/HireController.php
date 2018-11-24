@@ -92,4 +92,31 @@ class HireController extends Controller
             
     //     return Response::json(['status' => 200,'data' => $posts]);
     // }
+
+    public function locationHire(Request $req){
+        $keyword    = !empty($req->search) ? $req->search : null;
+        $address    = !empty($req->address) ? $req->address : null;
+        $lat        = !empty($req->lat) ? $req->lat : '10.762622';
+        $lng        = !empty($req->lng) ? $req->lng : '106.660172';
+        $posts      = DB::table('posts')->where('status',1)->where('post_type',0);
+         
+        if($address != null){
+             $posts = $posts->where('address','like','%'.$address.'%');
+        }
+        if($keyword != null){
+            $posts = $posts->where('post_title','like','%'.$keyword.'%')->orwhere('post_content','like','%'.$keyword.'%');
+        }
+        $posts = $posts->orderBy('created_at','desc')->get();
+        if($posts)
+            return Response::json([
+                'status'    => 200,
+                'post'      => $posts,
+                'keyword'   => $keyword,
+                'address'   => $address,
+                'lat'       => $lat,
+                'lng'       => $lng
+            ]);
+        else
+            return Response::json(['status' => 400]);
+    }
 }
